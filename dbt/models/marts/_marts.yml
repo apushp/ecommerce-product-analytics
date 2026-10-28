@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_sessions
+    description: one row per web session with funnel flags
+    columns:
+      - name: session_id
+        tests: [unique, not_null]
+      - name: furthest_step
+        tests:
+          - accepted_values:
+              values: ['browse', 'product', 'cart', 'purchase']
+
+  - name: fct_order_items
+    description: one row per item sold, joined to product cost
+    columns:
+      - name: order_item_id
+        tests: [unique, not_null]
+
+  - name: fct_orders
+    description: one row per order with revenue, margin and the customer's order sequence
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: user_id
+        tests:
+          - relationships: {to: ref('dim_users'), field: user_id}
+      - name: order_number
+        tests: [not_null]
+
+  - name: dim_users
+    description: one row per customer with lifetime order stats
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+
+  - name: dim_products
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
