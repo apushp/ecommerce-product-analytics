@@ -1,0 +1,81 @@
+{
+  "as_of_date": "2026-10-22",
+  "north_star": {
+    "latest_month": "2026-09-01",
+    "active_buyers": 4351,
+    "active_buyers_year_ago": 2061,
+    "yoy_growth": 1.111,
+    "returning_share_latest": 0.46,
+    "returning_share_first": 0.221
+  },
+  "revenue_drivers": {
+    "from_month": "2025-09-01",
+    "to_month": "2026-09-01",
+    "revenue_growth": 1.123,
+    "driver_change": {
+      "Active buyers": 1.111,
+      "Orders per buyer": 0.048,
+      "Avg order value": -0.04
+    },
+    "share_of_growth": {
+      "Active buyers": 0.993,
+      "Orders per buyer": 0.062,
+      "Avg order value": -0.055
+    }
+  },
+  "funnel": {
+    "Sessions": 672684,
+    "Viewed a product": 672683,
+    "Added to cart": 422571,
+    "Purchased": 173328,
+    "cart_to_purchase": 0.41,
+    "session_to_purchase": 0.258
+  },
+  "channel_test": {
+    "chi2": 1.85,
+    "dof": 4,
+    "p_value": 0.7637,
+    "cramers_v": 0.0017,
+    "rates": {
+      "YouTube": 0.2597,
+      "Adwords": 0.2578,
+      "Facebook": 0.2575,
+      "Email": 0.2572,
+      "Organic": 0.2569
+    }
+  },
+  "time_to_second_order": {
+    "customers": 77085,
+    "came_back": 28553,
+    "naive_repeat_rate": 0.37,
+    "km_returned_by": {
+      "30_days": 0.04,
+      "90_days": 0.094,
+      "180_days": 0.154,
+      "365_days": 0.25,
+      "730_days": 0.377
+    }
+  },
+  "cohorts": {
+    "repeat_rate_by_calendar_month": {
+      "2025-09": 0.0169,
+      "2025-10": 0.0181,
+      "2025-11": 0.0184,
+      "2025-12": 0.0189,
+      "2026-01": 0.0181,
+      "2026-02": 0.0163,
+      "2026-03": 0.0218,
+      "2026-04": 0.02,
+      "2026-05": 0.0224,
+      "2026-06": 0.0222,
+      "2026-07": 0.0252,
+      "2026-08": 0.0262,
+      "2026-09": 0.0277
+    },
+    "cohorts": "2025-10 to 2026-08",
+    "mean_month_1": 0.0514,
+    "min_cell": 0.0238,
+    "max_cell": 0.0886,
+    "mean_all": 0.0411
+  }
+}
