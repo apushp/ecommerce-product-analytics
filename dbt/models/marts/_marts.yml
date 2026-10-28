@@ -38,3 +38,28 @@ models:
     columns:
       - name: product_id
         tests: [unique, not_null]
+
+  - name: mart_monthly_kpis
+    description: >
+      one row per month. active_buyers (customers with at least one order that wasn't
+      cancelled) is the north star. gross_revenue = active_buyers * orders_per_buyer * avg_order_value.
+    columns:
+      - name: order_month
+        tests: [unique, not_null]
+      - name: active_buyers
+        description: customers with at least one non-cancelled order that month
+      - name: new_buyers
+        description: active buyers whose first ever order was that month
+      - name: avg_order_value
+        description: gross revenue per non-cancelled order
+      - name: cancel_rate
+        description: cancelled orders / all orders created that month
+      - name: item_return_rate
+        description: returned items / items not cancelled
+
+  - name: mart_cohort_retention
+    description: >
+      one row per first-order cohort month and months since that first order.
+      retention_rate = share of the cohort that ordered again in that month.
+    tests:
+      - unique_cohort_month
