@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: thelook
+    description: raw tables pulled from bigquery-public-data.thelook_ecommerce by scripts/01_extract_thelook.py
+    config:
+      external_location: "../data/raw/thelook/{name}.parquet"
+    tables:
+      - name: users
+      - name: orders
+      - name: order_items
+      - name: products
+      - name: events
+      - name: inventory_items
+      - name: distribution_centers

@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: stg_users
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+      - name: acquisition_channel
+        tests:
+          - accepted_values:
+              values: ['Search', 'Organic', 'Facebook', 'Email', 'Display']
+
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: user_id
+        tests:
+          - not_null
+          - relationships: {to: ref('stg_users'), field: user_id}
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['processing', 'shipped', 'complete', 'returned', 'cancelled']
+
+  - name: stg_order_items
+    columns:
+      - name: order_item_id
+        tests: [unique, not_null]
+      - name: order_id
+        tests:
+          - relationships: {to: ref('stg_orders'), field: order_id}
+      - name: product_id
+        tests:
+          - relationships: {to: ref('stg_products'), field: product_id}
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+
+  - name: stg_events
+    columns:
+      - name: event_id
+        tests: [unique, not_null]
+      - name: session_id
+        tests: [not_null]
+      - name: event_type
+        tests:
+          - accepted_values:
+              values: ['home', 'department', 'product', 'cart', 'purchase', 'cancel']

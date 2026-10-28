@@ -1,0 +1,21 @@
+name: thelook
+version: "1.0.0"
+profile: thelook
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+vars:
+  # thelook is regenerated daily and seeds a few events past the pull date,
+  # so everything gets cut off at the snapshot date in data/raw/thelook/_snapshot.txt
+  as_of_date: "2026-10-28"
+
+models:
+  thelook:
+    staging:
+      +materialized: table
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table
