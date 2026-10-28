@@ -7,9 +7,11 @@ test-paths: ["tests"]
 macro-paths: ["macros"]
 
 vars:
-  # thelook is regenerated daily and seeds a few events past the pull date,
-  # so everything gets cut off at the snapshot date in data/raw/thelook/_snapshot.txt
-  as_of_date: "2026-10-28"
+  # data pulled 2026-10-28 (see data/raw/thelook/_snapshot.txt). thelook's daily
+  # refresh piles new users and orders into the last few days before a pull
+  # (~450 signups/day from Oct 22 vs ~35 normally) and seeds events past the pull
+  # date, so the cutoff is the last day before that burst
+  as_of_date: "2026-10-22"
 
 models:
   thelook:
