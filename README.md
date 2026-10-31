@@ -6,7 +6,7 @@ Analytics for an online clothing store, built the way a product analytics team w
 
 The project covers a dbt warehouse with tests, a North Star metric and revenue drivers, funnel and channel tests, survival analysis and cohorts, RFM segments and lifetime value, A/B testing with variance reduction, uplift modeling, and revenue forecasting with backtested intervals.
 
-## What I found so far
+## What I found
 
 ![Active buyers per month](reports/figures/01_north_star.png)
 
