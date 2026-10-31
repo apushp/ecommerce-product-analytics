@@ -1,0 +1,108 @@
+{
+  "srm": {
+    "users": 13979592,
+    "treatment": 11882655,
+    "control": 2096937,
+    "observed_treatment_share": 0.85,
+    "designed_treatment_share": 0.85,
+    "chi2": 0.0,
+    "p_value": 0.9989,
+    "passed": true
+  },
+  "balance": {
+    "smd": {
+      "f0": -0.0069,
+      "f1": 0.024,
+      "f2": -0.0062,
+      "f3": -0.0488,
+      "f4": 0.008,
+      "f5": -0.0306,
+      "f6": -0.0404,
+      "f7": 0.0213,
+      "f8": -0.0224,
+      "f9": 0.024,
+      "f10": 0.0106,
+      "f11": -0.0052
+    },
+    "max_abs_smd": 0.0488,
+    "all_below_0.1": true,
+    "smd_chance_sd": 0.00075,
+    "max_smd_in_chance_sds": 65.2,
+    "row_block_treatment_share": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.58,
+      0.187,
+      1.0,
+      0.698,
+      1.0,
+      0.716,
+      1.0,
+      0.902,
+      0.817
+    ],
+    "row_block_visit_rate": [
+      0.0252,
+      0.0249,
+      0.0248,
+      0.0252,
+      0.0249,
+      0.024,
+      0.037,
+      0.0629,
+      0.0732,
+      0.0855,
+      0.0801,
+      0.0864,
+      0.0116,
+      0.0722
+    ]
+  },
+  "power": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "visit_rate_control": 0.0382,
+    "conversion_rate_control": 0.00194,
+    "visit_mde_relative": 0.0105,
+    "conversion_mde_relative": 0.0476,
+    "visit_mde_relative_if_50_50": 0.0075,
+    "users_needed_vs_50_50": 1.96
+  },
+  "lift": {
+    "visit": {
+      "treatment_mean": 0.048543,
+      "control_mean": 0.038201,
+      "abs_lift": 0.010342,
+      "abs_ci": [
+        0.010056,
+        0.010629
+      ],
+      "rel_lift": 0.2707,
+      "rel_ci": [
+        0.2615,
+        0.2799
+      ],
+      "z": 70.69,
+      "p_value": 0.0
+    },
+    "conversion": {
+      "treatment_mean": 0.003089,
+      "control_mean": 0.001938,
+      "abs_lift": 0.001152,
+      "abs_ci": [
+        0.001085,
+        0.001219
+      ],
+      "rel_lift": 0.5945,
+      "rel_ci": [
+        0.5429,
+        0.6461
+      ],
+      "z": 33.51,
+      "p_value": 3.19e-246
+    }
+  }
+}
