@@ -2,7 +2,7 @@
 
 Analytics for an online clothing store, built the way a product analytics team would: raw data pulled from BigQuery, modeled and tested in dbt, then analyzed in Python. The question running through it: where does the store lose customers, and what actually brings them back?
 
-**Work in progress.** Stages 1 to 6 are done: warehouse, metrics, funnel and retention, customer segments and lifetime value, A/B testing, and uplift modeling. Forecasting and a dashboard come next.
+**Work in progress.** Stages 1 to 7 are done: warehouse, metrics, funnel and retention, customer segments and lifetime value, A/B testing, uplift modeling, and revenue forecasting. A dashboard and decision memo come next.
 
 ## What I found so far
 
@@ -23,6 +23,16 @@ Analytics for an online clothing store, built the way a product analytics team w
 - **Lifetime value.** I wrote BG/NBD (how many more purchases) and Gamma-Gamma (what each is worth) with scipy and fitted them by maximum likelihood. A Champion is worth about $34 over the next year and a Lost customer about $9.
 - **The model ran 35% low on a 26-week holdout.** It predicted 3,920 purchases and customers made 5,989. BG/NBD assumes each customer's buying rate stays put, but stage 3 showed repeat buying rising across the store. On top of that, past buying barely predicts future buying here: the top 10% of customers by predicted purchases made only 16.5% of the holdout purchases, where 10% would be random. I treat CLV as a rough guide on this dataset, not a forecast.
 - thelook caps customers at 4 orders, so nobody with 4 purchases ever buys again. The holdout check is what showed this.
+
+## Revenue forecast
+
+![Revenue forecast](reports/figures/17_revenue_forecast.png)
+
+- **Next quarter: about $1.62M in net revenue** (weeks ending 2026-10-25 to 2027-01-17), 54% more than the last 13 weeks. The 80% range is $1.22M to $2.16M.
+- **Four models, one backtest.** Naive, drift, damped-trend ETS and ARIMA(1,1,1) with drift, all on log revenue because the store grows by a percentage each week. Each forecast 13 weeks ahead from 8 starting weeks over the past year. Drift was most accurate (9.0% average error, against 11.5% to 13.3% for the others).
+- **The intervals mattered more than the point forecasts.** ETS's and ARIMA's 80% intervals held the actual revenue only 44% and 41% of the time. Their intervals only cover the week-to-week noise they saw, not the growth rate changing underneath them. Drift's intervals were too wide instead (95% coverage at 80%), which is the safer mistake for planning.
+- **Every model ran low,** drift by 6% on average, because growth kept speeding up through 2026. If that continues, the real quarter lands in the upper half of the range.
+- No weekly or yearly seasonality showed up (every weekday and month looks the same), which fits a generated dataset.
 
 ## A/B test: did Criteo's ads work?
 
@@ -68,6 +78,7 @@ BigQuery (public data)
         └─ dbt on DuckDB              staging → intermediate → marts, 54 tests
              └─ scripts/02_...py      metrics, funnel, stats tests, charts
              └─ scripts/05_...py      RFM segments, k-means, BG/NBD + Gamma-Gamma CLV
+             └─ scripts/06_...py      weekly revenue forecast, rolling backtest
 
 Criteo csv (Hugging Face)
    └─ scripts/03_ab_test_criteo.py    SRM, balance, power, lift, CUPAC, A/A, exposure
@@ -91,6 +102,7 @@ python scripts/01_extract_thelook.py --project <your-gcp-project>
 cd dbt && dbt build --profiles-dir . && cd ..
 python scripts/02_metrics_funnel_retention.py
 python scripts/05_segments_clv.py
+python scripts/06_forecast_revenue.py
 
 # Criteo: download criteo-uplift-v2.1.csv.gz from Hugging Face into data/raw/
 python scripts/03_ab_test_criteo.py   # about 2 minutes, needs ~4GB of memory
