@@ -331,10 +331,9 @@ def build_sheets(s3, s4, s5, s6, s7):
 
 
 def build_dashboard(s3, s5, s7):
-    findings = ("Buyers more than doubled in a year and explain almost all revenue growth. "
-                f"Checkout is the biggest leak ({s3['funnel']['cart_to_purchase']:.0%} of carts become orders). "
-                f"Ads lifted visits {s5['cupac']['visit']['rel_lift']:.0%} once treatment and control were made "
-                f"comparable, not the {s5['lift']['visit']['rel_lift']:.0%} a simple comparison shows.")
+    findings = ("Buyers doubled in a year. Checkout is the biggest leak "
+                f"({s3['funnel']['cart_to_purchase']:.0%} of carts become orders). Ads lifted visits "
+                f"{s5['cupac']['visit']['rel_lift']:.0%}, not {s5['lift']['visit']['rel_lift']:.0%}.")
     tiles = [("Active Buyers", 0, 11000), ("Revenue Forecast", 50000, 11000),
              ("Session Funnel", 0, 40000), ("Customer Segments", 50000, 40000),
              ("Ad Lift", 0, 69000), ("Uplift Targeting", 50000, 69000)]
@@ -343,7 +342,7 @@ def build_dashboard(s3, s5, s7):
     return f"""
     <dashboard name='E-commerce Product Analytics'>
       <style />
-      <size maxheight='1100' maxwidth='1200' minheight='1100' minwidth='1200' />
+      <size sizing-mode='automatic' />
       <zones>
         <zone h='100000' id='1' type-v2='layout-basic' w='100000' x='0' y='0'>
           <zone h='5000' id='2' type-v2='text' w='100000' x='0' y='0'>
@@ -374,7 +373,9 @@ def build():
              "<strip size='31'><card type='title' /></strip></edge></cards>")
     windows = "".join(f"\n    <window class='worksheet' name={quoteattr(n)}>{cards}</window>" for n in names)
     windows += ("\n    <window class='dashboard' maximized='true' name='E-commerce Product Analytics'>"
-                "<viewpoints>" + "".join(f"<viewpoint name={quoteattr(n)} />" for n in names) +
+                # entire-view: each chart shrinks to fit its box instead of scrolling
+                "<viewpoints>" + "".join(f"<viewpoint name={quoteattr(n)}><zoom type='entire-view' /></viewpoint>"
+                                         for n in names) +
                 "</viewpoints><active id='-1' /><device-preview /></window>")
     workbook = f"""<?xml version='1.0' encoding='utf-8' ?>
 <workbook original-version='18.1' source-build='2025.2.0 (20252.25.0603.1006)' source-platform='mac' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>

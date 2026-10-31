@@ -2,7 +2,7 @@
 
 **From:** Amal Pushp
 **Data:** thelook store data to 2026-10-22, Criteo ad experiment (14M users)
-**Dashboard:** https://apushp.github.io/ecommerce-product-analytics/
+**Dashboard:** https://apushp.github.io/ecommerce-product-analytics/ (Tableau version: https://public.tableau.com/app/profile/amal.pushp2875/viz/ecommerce_analytics_17934643228960/E-commerceProductAnalytics)
 
 ## Summary
 
