@@ -14,3 +14,4 @@ scikit-uplift==0.5.1
 scipy==1.17.1
 seaborn==0.13.2
 statsmodels==0.15.0
+tableauhyperapi==0.0.26479
