@@ -147,6 +147,9 @@ def forecast(weekly, best, out):
         "first_week": str(dates[0].date()),
         "last_week": str(dates[-1].date()),
         "weekly_median": {str(d.date()): round(float(v), 0) for d, v in zip(dates, f["median"])},
+        # the bands, so the dashboard can draw the same fan as the chart
+        "weekly_80": [[round(float(lo), 0), round(float(hi), 0)] for lo, hi in zip(*f[0.8])],
+        "weekly_95": [[round(float(lo), 0), round(float(hi), 0)] for lo, hi in zip(*f[0.95])],
         "quarter_median": round(float(np.median(q)), 0),
         "quarter_80": [round(float(v), 0) for v in np.quantile(q, [0.1, 0.9])],
         "quarter_95": [round(float(v), 0) for v in np.quantile(q, [0.025, 0.975])],
