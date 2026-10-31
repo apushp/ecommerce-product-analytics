@@ -1,0 +1,202 @@
+{
+  "as_of_date": "2026-10-22",
+  "rfm": {
+    "customers": 63715,
+    "frequency_counts": {
+      "1": 44408,
+      "2": 13789,
+      "3": 4062,
+      "4": 1456
+    },
+    "segments": {
+      "Champions": {
+        "customers": 3368,
+        "customer_share": 0.053,
+        "revenue_share": 0.121,
+        "median_recency_days": 96,
+        "avg_purchases": 3.28
+      },
+      "Loyal": {
+        "customers": 10929,
+        "customer_share": 0.172,
+        "revenue_share": 0.261,
+        "median_recency_days": 217,
+        "avg_purchases": 2.13
+      },
+      "New": {
+        "customers": 15314,
+        "customer_share": 0.24,
+        "revenue_share": 0.17,
+        "median_recency_days": 120,
+        "avg_purchases": 1.0
+      },
+      "Promising": {
+        "customers": 8618,
+        "customer_share": 0.135,
+        "revenue_share": 0.094,
+        "median_recency_days": 446,
+        "avg_purchases": 1.0
+      },
+      "At risk": {
+        "customers": 1015,
+        "customer_share": 0.016,
+        "revenue_share": 0.037,
+        "median_recency_days": 880,
+        "avg_purchases": 3.21
+      },
+      "Slipping": {
+        "customers": 3995,
+        "customer_share": 0.063,
+        "revenue_share": 0.088,
+        "median_recency_days": 967,
+        "avg_purchases": 2.0
+      },
+      "Lost": {
+        "customers": 20476,
+        "customer_share": 0.321,
+        "revenue_share": 0.228,
+        "median_recency_days": 1155,
+        "avg_purchases": 1.0
+      }
+    }
+  },
+  "kmeans": {
+    "silhouette_by_k": {
+      "2": 0.382,
+      "3": 0.353,
+      "4": 0.335,
+      "5": 0.341,
+      "6": 0.34,
+      "7": 0.342,
+      "8": 0.32
+    },
+    "best_k": 2,
+    "adjusted_rand_vs_rfm": 0.279,
+    "clusters": {
+      "0": {
+        "customers": 44859,
+        "median_recency_days": 571,
+        "avg_purchases": 1.04,
+        "median_spend": 54.0
+      },
+      "1": {
+        "customers": 18856,
+        "median_recency_days": 229,
+        "avg_purchases": 2.31,
+        "median_spend": 183.0
+      }
+    }
+  },
+  "clv_validation": {
+    "calibration_end": "2026-04-23",
+    "holdout_weeks": 26,
+    "customers": 51174,
+    "bgnbd_params": {
+      "r": 0.8526,
+      "alpha": 227.4898,
+      "a": 1083.7528,
+      "b": 2676.976
+    },
+    "actual_total": 5989,
+    "predicted_total": 3919.9,
+    "naive_total": 5760.6,
+    "mae_model": 0.1758,
+    "mae_naive": 0.1985,
+    "top_decile_capture_model": 0.165,
+    "top_decile_capture_naive": 0.17,
+    "actual_over_predicted": 1.528,
+    "by_repeat_purchases": {
+      "0": {
+        "actual": 0.1114,
+        "predicted": 0.0699,
+        "naive": 0.0
+      },
+      "1": {
+        "actual": 0.1395,
+        "predicted": 0.0852,
+        "naive": 0.3966
+      },
+      "2": {
+        "actual": 0.1448,
+        "predicted": 0.1181,
+        "naive": 0.4886
+      },
+      "3": {
+        "actual": 0.0,
+        "predicted": 0.1494,
+        "naive": 0.5943
+      }
+    }
+  },
+  "clv": {
+    "horizon_weeks": 52,
+    "bgnbd_params": {
+      "r": 0.522,
+      "alpha": 94.9693,
+      "a": 252.5559,
+      "b": 491.4358
+    },
+    "gamma_gamma_params": {
+      "p": 1.866,
+      "q": 6.2884,
+      "v": 244.6088
+    },
+    "freq_value_corr_repeaters": -0.007,
+    "expected_purchases_total": 11220.0,
+    "expected_revenue_total": 967447.0,
+    "expected_revenue_total_holdout_scaled": 1478260.0,
+    "avg_clv": 15.18,
+    "top_10pct_share_of_clv": 0.242,
+    "by_segment": {
+      "Champions": {
+        "customers": 3368,
+        "avg_clv": 34.2,
+        "share_of_clv": 0.119,
+        "avg_p_alive": 0.605,
+        "avg_expected_purchases": 0.4
+      },
+      "Loyal": {
+        "customers": 10929,
+        "avg_clv": 20.96,
+        "share_of_clv": 0.237,
+        "avg_p_alive": 0.583,
+        "avg_expected_purchases": 0.242
+      },
+      "New": {
+        "customers": 15314,
+        "avg_clv": 18.63,
+        "share_of_clv": 0.295,
+        "avg_p_alive": 1.0,
+        "avg_expected_purchases": 0.216
+      },
+      "Promising": {
+        "customers": 8618,
+        "avg_clv": 13.59,
+        "share_of_clv": 0.121,
+        "avg_p_alive": 1.0,
+        "avg_expected_purchases": 0.158
+      },
+      "At risk": {
+        "customers": 1015,
+        "avg_clv": 10.79,
+        "share_of_clv": 0.011,
+        "avg_p_alive": 0.33,
+        "avg_expected_purchases": 0.124
+      },
+      "Slipping": {
+        "customers": 3995,
+        "avg_clv": 8.57,
+        "share_of_clv": 0.035,
+        "avg_p_alive": 0.409,
+        "avg_expected_purchases": 0.1
+      },
+      "Lost": {
+        "customers": 20476,
+        "avg_clv": 8.57,
+        "share_of_clv": 0.181,
+        "avg_p_alive": 1.0,
+        "avg_expected_purchases": 0.099
+      }
+    }
+  }
+}
