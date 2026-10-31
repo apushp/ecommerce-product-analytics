@@ -63,3 +63,22 @@ models:
       retention_rate = share of the cohort that ordered again in that month.
     tests:
       - unique_cohort_month
+
+  - name: mart_customer_rfm
+    description: >
+      one row per customer with at least one purchase (an order with net revenue
+      above zero), measured at as_of_date. feeds RFM segments and lifetime value.
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+      - name: recency_days
+        description: days from the last purchase to as_of_date
+      - name: frequency
+        description: number of purchases
+      - name: monetary_avg
+        description: average net revenue per purchase
