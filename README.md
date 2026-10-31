@@ -2,7 +2,9 @@
 
 Analytics for an online clothing store, built the way a product analytics team would: raw data pulled from BigQuery, modeled and tested in dbt, then analyzed in Python. The question running through it: where does the store lose customers, and what actually brings them back?
 
-**Work in progress.** Stages 1 to 7 are done: warehouse, metrics, funnel and retention, customer segments and lifetime value, A/B testing, uplift modeling, and revenue forecasting. A dashboard and decision memo come next.
+**[Live dashboard](https://apushp.github.io/ecommerce-product-analytics/)** · **[Decision memo](reports/decision_memo.md)**
+
+The project covers a dbt warehouse with tests, a North Star metric and revenue drivers, funnel and channel tests, survival analysis and cohorts, RFM segments and lifetime value, A/B testing with variance reduction, uplift modeling, and revenue forecasting with backtested intervals.
 
 ## What I found so far
 
@@ -79,6 +81,7 @@ BigQuery (public data)
              └─ scripts/02_...py      metrics, funnel, stats tests, charts
              └─ scripts/05_...py      RFM segments, k-means, BG/NBD + Gamma-Gamma CLV
              └─ scripts/06_...py      weekly revenue forecast, rolling backtest
+                  └─ scripts/07_...py dashboard page in docs/ (GitHub Pages)
 
 Criteo csv (Hugging Face)
    └─ scripts/03_ab_test_criteo.py    SRM, balance, power, lift, CUPAC, A/A, exposure
@@ -107,6 +110,9 @@ python scripts/06_forecast_revenue.py
 # Criteo: download criteo-uplift-v2.1.csv.gz from Hugging Face into data/raw/
 python scripts/03_ab_test_criteo.py   # about 2 minutes, needs ~4GB of memory
 python scripts/04_uplift_criteo.py    # about 5 minutes
+
+# dashboard, after everything above
+python scripts/07_build_dashboard.py
 ```
 
 The BigQuery sandbox is free, and no credit card is needed. Reading the tables uses `list_rows`, which doesn't count against the query quota.
