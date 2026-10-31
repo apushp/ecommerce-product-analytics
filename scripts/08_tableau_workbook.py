@@ -214,7 +214,8 @@ def color_rule(ref, colors):
 COLORS = {}  # source -> [(field reference, {category: color})], filled as sheets are built
 
 
-def worksheet(name, title, source, deps, rows, cols, mark, encodings, extra_view="", colors=None, labels=False):
+def worksheet(name, title, source, deps, rows, cols, mark, encodings, extra_view="", colors=None, labels=False,
+              mark_size=None):
     if colors:
         COLORS.setdefault(source, []).append(colors)
     ds = ds_name(source)
@@ -222,6 +223,10 @@ def worksheet(name, title, source, deps, rows, cols, mark, encodings, extra_view
     used = "".join(x for x, _ in deps.values())
     col_defs = "".join(column_def(n, t) for n, t in columns if f"column='[{n}]'" in used)
     enc = "".join(f"<{kind} column='[{ds}].{deps[key][1]}' />" for kind, key in encodings)
+    # a fixed mark size, for charts where Tableau's automatic sizing makes dots overlap
+    sizing = "<mark-sizing mark-sizing-setting='marks-scaling-off' />" if mark_size else ""
+    pane_style = (f"<style><style-rule element='mark'><format attr='size' value='{mark_size}' />"
+                  "</style-rule></style>") if mark_size else ""
     label_style = ("<style-rule element='mark'><format attr='mark-labels-show' value='true' />"
                    "<format attr='mark-labels-cull' value='true' /></style-rule>") if labels else ""
     return f"""
@@ -239,7 +244,9 @@ def worksheet(name, title, source, deps, rows, cols, mark, encodings, extra_view
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view><breakdown value='auto' /></view>
             <mark class='{mark}' />
+            {sizing}
             <encodings>{enc}</encodings>
+            {pane_style}
           </pane>
         </panes>
         <rows>{rows}</rows>
@@ -298,11 +305,13 @@ def build_sheets(s3, s4, s5, s6, s7):
     top_r = seg["Champions"]["revenue_share"] + seg["Loyal"]["revenue_share"]
     sheets.append(worksheet(
         "Customer Segments",
-        f"Champions + Loyal: {top_c:.0%} of buyers, {top_r:.0%} of revenue (blue = revenue, grey = customers)",
-        "segments", d, f"([{ds}].{d['segment'][1]} / [{ds}].{d['measure'][1]})", f"[{ds}].{d['share'][1]}", "Bar",
+        f"Champions + Loyal: {top_c:.0%} of buyers, {top_r:.0%} of revenue (blue dot = revenue, grey dot = customers)",
+        # segments run across and share goes up, one column with two dots per segment.
+        # stacked as rows, seven segment names didn't fit the short dashboard tile
+        "segments", d, f"[{ds}].{d['share'][1]}", f"[{ds}].{d['segment'][1]}", "Circle",
         [("color", "measure"), ("tooltip", "customers"), ("tooltip", "value")],
         extra_view=sort_by("segments", d["segment"][1], d["order"][1]),
-        colors=(d["measure"][1], {"Share of revenue": ACCENT, "Share of customers": GREY})))
+        colors=(d["measure"][1], {"Share of revenue": ACCENT, "Share of customers": GREY}), mark_size=0.5))
 
     d = {"metric": instance("metric", "None"), "method": instance("method", "None"),
          "lift": instance("lift", "Sum"), "lo": instance("ci_low", "Sum"), "hi": instance("ci_high", "Sum")}
