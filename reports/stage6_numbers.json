@@ -1,0 +1,167 @@
+{
+  "train_users": 4000000,
+  "test_users": 6986962,
+  "total_incremental_visits_test": 53553.1,
+  "policy": {
+    "S-learner": {
+      "qini_coefficient": 0.4108,
+      "share_of_incremental_at_10": 0.76,
+      "share_of_incremental_at_20": 0.876,
+      "share_of_incremental_at_30": 0.942,
+      "share_of_incremental_at_50": 0.981,
+      "sklift_qini_auc_unweighted": 0.0874
+    },
+    "T-learner": {
+      "qini_coefficient": 0.3659,
+      "share_of_incremental_at_10": 0.71,
+      "share_of_incremental_at_20": 0.847,
+      "share_of_incremental_at_30": 0.892,
+      "share_of_incremental_at_50": 0.934,
+      "sklift_qini_auc_unweighted": 0.081
+    },
+    "Response model": {
+      "qini_coefficient": 0.4027,
+      "share_of_incremental_at_10": 0.661,
+      "share_of_incremental_at_20": 0.885,
+      "share_of_incremental_at_30": 0.944,
+      "share_of_incremental_at_50": 0.995,
+      "sklift_qini_auc_unweighted": 0.0845
+    }
+  },
+  "best_model": "S-learner",
+  "deciles": [
+    {
+      "decile": 1,
+      "users": 698697,
+      "treated_rate": 0.30484,
+      "control_rate": 0.24671,
+      "uplift": 0.05814,
+      "ci": [
+        0.05514,
+        0.06113
+      ]
+    },
+    {
+      "decile": 2,
+      "users": 698696,
+      "treated_rate": 0.08594,
+      "control_rate": 0.07814,
+      "uplift": 0.00781,
+      "ci": [
+        0.00603,
+        0.00959
+      ]
+    },
+    {
+      "decile": 3,
+      "users": 699458,
+      "treated_rate": 0.02985,
+      "control_rate": 0.02617,
+      "uplift": 0.00367,
+      "ci": [
+        0.00262,
+        0.00472
+      ]
+    },
+    {
+      "decile": 4,
+      "users": 704153,
+      "treated_rate": 0.01153,
+      "control_rate": 0.0102,
+      "uplift": 0.00133,
+      "ci": [
+        0.00067,
+        0.00198
+      ]
+    },
+    {
+      "decile": 5,
+      "users": 692498,
+      "treated_rate": 0.00645,
+      "control_rate": 0.00567,
+      "uplift": 0.00078,
+      "ci": [
+        0.00028,
+        0.00127
+      ]
+    },
+    {
+      "decile": 6,
+      "users": 703346,
+      "treated_rate": 0.00377,
+      "control_rate": 0.00335,
+      "uplift": 0.00041,
+      "ci": [
+        3e-05,
+        0.00079
+      ]
+    },
+    {
+      "decile": 7,
+      "users": 694283,
+      "treated_rate": 0.00184,
+      "control_rate": 0.00156,
+      "uplift": 0.00028,
+      "ci": [
+        2e-05,
+        0.00054
+      ]
+    },
+    {
+      "decile": 8,
+      "users": 700153,
+      "treated_rate": 0.00216,
+      "control_rate": 0.00195,
+      "uplift": 0.00021,
+      "ci": [
+        -8e-05,
+        0.0005
+      ]
+    },
+    {
+      "decile": 9,
+      "users": 701487,
+      "treated_rate": 0.00208,
+      "control_rate": 0.00162,
+      "uplift": 0.00046,
+      "ci": [
+        0.00019,
+        0.00073
+      ]
+    },
+    {
+      "decile": 10,
+      "users": 694191,
+      "treated_rate": 0.03082,
+      "control_rate": 0.03026,
+      "uplift": 0.00055,
+      "ci": [
+        -0.00057,
+        0.00168
+      ]
+    }
+  ],
+  "share_negative_predicted_uplift": 0.0931,
+  "bootstrap": {
+    "reps": 100,
+    "share_at_10_ci": {
+      "S-learner": [
+        0.727,
+        0.791
+      ],
+      "T-learner": [
+        0.678,
+        0.739
+      ],
+      "Response model": [
+        0.641,
+        0.688
+      ]
+    },
+    "best_minus_response_at_10": 0.1,
+    "best_minus_response_at_10_ci": [
+      0.074,
+      0.127
+    ]
+  }
+}
