@@ -86,7 +86,7 @@
         0.2799
       ],
       "z": 70.69,
-      "p_value": 0.0
+      "p_value": "<1e-300"
     },
     "conversion": {
       "treatment_mean": 0.003089,
@@ -103,6 +103,109 @@
       ],
       "z": 33.51,
       "p_value": 3.19e-246
+    }
+  },
+  "cupac": {
+    "visit": {
+      "corr_prediction_outcome": 0.5769,
+      "theta": 1.0011,
+      "variance_reduction": 0.3058,
+      "equivalent_sample_multiplier": 1.44,
+      "estimate_shift_in_plain_ses": -26.9,
+      "treatment_mean": 0.047952,
+      "control_mean": 0.041552,
+      "abs_lift": 0.0064,
+      "abs_ci": [
+        0.006161,
+        0.006639
+      ],
+      "rel_lift": 0.1675,
+      "rel_ci": [
+        0.1599,
+        0.1751
+      ],
+      "z": 52.5,
+      "p_value": "<1e-300"
+    },
+    "conversion": {
+      "corr_prediction_outcome": 0.2815,
+      "theta": 0.4749,
+      "variance_reduction": 0.0727,
+      "equivalent_sample_multiplier": 1.078,
+      "estimate_shift_in_plain_ses": -2.8,
+      "treatment_mean": 0.003075,
+      "control_mean": 0.00202,
+      "abs_lift": 0.001055,
+      "abs_ci": [
+        0.00099,
+        0.00112
+      ],
+      "rel_lift": 0.5447,
+      "rel_ci": [
+        0.4951,
+        0.5942
+      ],
+      "z": 31.89,
+      "p_value": 4.29e-223
+    }
+  },
+  "propensity": {
+    "auc": 0.5097,
+    "score_range_1_99": [
+      0.842,
+      0.896
+    ],
+    "visit": {
+      "treatment_mean": 0.047995,
+      "control_mean": 0.040307,
+      "rel_lift": 0.1908
+    },
+    "conversion": {
+      "treatment_mean": 0.003053,
+      "control_mean": 0.002042,
+      "rel_lift": 0.4948
+    }
+  },
+  "aa": {
+    "sims": 1000,
+    "users_per_sim": 2096937,
+    "false_positive_rate": 0.04,
+    "ks_uniform_p": 0.226,
+    "false_positive_rate_by_looks": {
+      "1": 0.04,
+      "2": 0.082,
+      "4": 0.123,
+      "5": 0.156,
+      "10": 0.206,
+      "20": 0.264
+    }
+  },
+  "exposure": {
+    "exposed_share_treatment": 0.036,
+    "exposed_share_control": 0.0,
+    "visit": {
+      "itt_abs": 0.0064,
+      "cace_abs": 0.1776,
+      "cace_ci": [
+        0.17097,
+        0.18423
+      ],
+      "naive_exposed_vs_unexposed": 0.37968,
+      "naive_exposed_vs_control": 0.37634,
+      "exposed_rate": 0.41454,
+      "complier_baseline": 0.23694
+    },
+    "conversion": {
+      "itt_abs": 0.001055,
+      "cace_abs": 0.02928,
+      "cace_ci": [
+        0.02748,
+        0.03108
+      ],
+      "naive_exposed_vs_unexposed": 0.05259,
+      "naive_exposed_vs_control": 0.05185,
+      "exposed_rate": 0.05378,
+      "complier_baseline": 0.02451
     }
   }
 }
