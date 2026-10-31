@@ -2,7 +2,7 @@
 
 Analytics for an online clothing store, built the way a product analytics team would: raw data pulled from BigQuery, modeled and tested in dbt, then analyzed in Python. The question running through it: where does the store lose customers, and what actually brings them back?
 
-**Work in progress.** Stages 1 to 3 (warehouse, metrics, funnel and retention) stage 5 (A/B testing) and stage 6 (uplift modeling) are done. Segmentation, forecasting and a dashboard come next.
+**Work in progress.** Stages 1 to 6 are done: warehouse, metrics, funnel and retention, customer segments and lifetime value, A/B testing, and uplift modeling. Forecasting and a dashboard come next.
 
 ## What I found so far
 
@@ -13,6 +13,16 @@ Analytics for an online clothing store, built the way a product analytics team w
 - **No traffic channel converts better than another.** Chi-square p = 0.76, Cramér's V = 0.0017.
 - **25% of customers order again within a year** (Kaplan-Meier, which accounts for recent customers who haven't had time to come back). The simple "2+ orders" rate says 37%, and that number mixes long-time customers with brand new ones.
 - **Repeat buying is rising store-wide**, from 1.7% to 2.8% of customers ordering again each month over the past year. It shows up along the diagonals of the cohort table, not down its columns.
+
+## Customer segments and lifetime value
+
+![RFM segments](reports/figures/14_rfm_segments.png)
+
+- **RFM segments.** Every customer is scored on recency (quintiles), number of purchases and spend, then named. Champions and Loyal customers are 22% of buyers and 38% of revenue. Lost customers (one purchase, long ago) are the biggest group at 32%.
+- **k-means agrees only loosely.** The best k by silhouette is 2, which just splits one-time buyers from repeat buyers (adjusted Rand index 0.28 against the named segments). Clustering finds the structure that's in the numbers; the named segments add the recency cut that a retention campaign needs.
+- **Lifetime value.** I wrote BG/NBD (how many more purchases) and Gamma-Gamma (what each is worth) with scipy and fitted them by maximum likelihood. A Champion is worth about $34 over the next year and a Lost customer about $9.
+- **The model ran 35% low on a 26-week holdout.** It predicted 3,920 purchases and customers made 5,989. BG/NBD assumes each customer's buying rate stays put, but stage 3 showed repeat buying rising across the store. On top of that, past buying barely predicts future buying here: the top 10% of customers by predicted purchases made only 16.5% of the holdout purchases, where 10% would be random. I treat CLV as a rough guide on this dataset, not a forecast.
+- thelook caps customers at 4 orders, so nobody with 4 purchases ever buys again. The holdout check is what showed this.
 
 ## A/B test: did Criteo's ads work?
 
@@ -43,7 +53,7 @@ More charts are in [`reports/figures/`](reports/figures/). Every number above is
 
 | Dataset | What it is | Used for |
 | --- | --- | --- |
-| [thelook_ecommerce](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce) | Google's public BigQuery dataset of a fictional clothing store: 97k users, 120k orders, 2.4M web events | warehouse, metrics, funnel, cohorts |
+| [thelook_ecommerce](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce) | Google's public BigQuery dataset of a fictional clothing store: 97k users, 120k orders, 2.4M web events | warehouse, metrics, funnel, cohorts, segments, lifetime value |
 | [Criteo Uplift v2.1](https://huggingface.co/datasets/criteo/criteo-uplift) | a real randomized ad experiment, about 14M users | A/B testing and uplift modeling |
 
 thelook is synthetic, so some patterns are generator artifacts rather than real behavior. Anonymous sessions never buy, and every channel converts at the same rate. I kept these as documented limitations. The A/B testing uses Criteo's real experiment for this reason.
@@ -55,8 +65,9 @@ Data is cut off at **2026-10-22**. thelook's daily refresh piles about 13x the n
 ```
 BigQuery (public data)
    └─ scripts/01_extract_thelook.py   pull 7 tables once, save as parquet
-        └─ dbt on DuckDB              staging → intermediate → marts, 49 tests
+        └─ dbt on DuckDB              staging → intermediate → marts, 54 tests
              └─ scripts/02_...py      metrics, funnel, stats tests, charts
+             └─ scripts/05_...py      RFM segments, k-means, BG/NBD + Gamma-Gamma CLV
 
 Criteo csv (Hugging Face)
    └─ scripts/03_ab_test_criteo.py    SRM, balance, power, lift, CUPAC, A/A, exposure
@@ -64,7 +75,7 @@ Criteo csv (Hugging Face)
 ```
 
 - `dbt/models/staging/`: one cleaned model per raw table. Timestamps go to UTC, personal data is dropped, and the date cutoff is applied.
-- `dbt/models/marts/`: `fct_sessions`, `fct_orders`, `fct_order_items`, `dim_users`, `dim_products`, `mart_monthly_kpis`, `mart_cohort_retention`.
+- `dbt/models/marts/`: `fct_sessions`, `fct_orders`, `fct_order_items`, `dim_users`, `dim_products`, `mart_monthly_kpis`, `mart_cohort_retention`, `mart_customer_rfm`.
 - Revenue rules are defined once in `fct_order_items`: gross revenue excludes cancelled items, and net revenue also excludes returns.
 - Two business-rule tests check that order revenue matches item revenue, and that net revenue is never above gross.
 
@@ -79,6 +90,7 @@ python scripts/01_extract_thelook.py --project <your-gcp-project>
 
 cd dbt && dbt build --profiles-dir . && cd ..
 python scripts/02_metrics_funnel_retention.py
+python scripts/05_segments_clv.py
 
 # Criteo: download criteo-uplift-v2.1.csv.gz from Hugging Face into data/raw/
 python scripts/03_ab_test_criteo.py   # about 2 minutes, needs ~4GB of memory
